@@ -1,0 +1,7 @@
+node_modules
+artifacts/build-info/5ade6b8cef899a480ea098d347b3f5e1.json
+artifacts/contracts/Token.sol/Token.dbg.json
+artifacts/contracts/Token.sol/Token.json
+artifacts/hardhat/console.sol/console.dbg.json
+artifacts/hardhat/console.sol/console.json
+cache/solidity-files-cache.json

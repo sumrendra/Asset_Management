@@ -55,3 +55,32 @@ To build our decentralized asset management system, we are using the following t
 
 ## Getting Started
 
+To get started with our decentralized asset management system, follow these steps:
+
+1. Install Hardhat as a development dependency:
+  ```
+  npm install --save-dev hardhat
+  ```
+
+2. Once Hardhat is installed, create a new Hardhat project by running:
+  ```
+  npx hardhat init
+  ```
+
+3. To compile the Solidity contracts, run:
+  ```
+  npx hardhat compile
+  ```
+4. Start the test node:
+  ```
+  npx hardhat node
+  ```
+
+5. Deploy the Contract:
+  ```
+  npx hardhat run scripts/deploy.js
+  ```
+
+
+
+
