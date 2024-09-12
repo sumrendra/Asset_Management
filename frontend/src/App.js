@@ -6,21 +6,32 @@ import './App.css';
 const UserRoles = lazy(() => import('./components/UserRoles'));
 const AdminRoleManagement = lazy(() => import('./components/AdminRoleManagement'));
 const AssetManagement = lazy(() => import('./components/AssetManagement'));
+const AssetMaintenance = lazy(() => import('./components/AssetMaintenance'));
 
 const App = () => {
   const [account, setAccount] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [activeTab, setActiveTab] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
   const options = [
     { label: 'User Roles Management', key: 'UserRoles' },
     { label: 'Admin Role Management', key: 'AdminRoleManagement' },
-    { label: 'Asset Management', key: 'AssetManagement' }
+    { label: 'Purchase Department', key: 'PurchaseDepartment' },
+    { label: 'Maintenance Department', key: 'MaintenanceDepartment' },
   ];
+
+  const filteredOptions = options.filter(option =>
+    option.label.toLowerCase().includes(searchQuery)
+  );
 
   const renderContent = () => {
     switch (activeTab) {
@@ -36,18 +47,20 @@ const App = () => {
             <AdminRoleManagement account={account} isConnected={isConnected}/>
           </Suspense>
         );
-      case 'AssetManagement':
+      case 'PurchaseDepartment':
         return (
-          <Suspense fallback={<div>Loading Asset Management...</div>}>
+          <Suspense fallback={<div>Loading Purchasing ...</div>}>
             <AssetManagement account={account} isConnected={isConnected}/>
           </Suspense>
         );
-      default:
+      case 'MaintenanceDepartment':
         return (
-          <div className="default-message">
-            <span>Select an option from the sidebar.</span>
-          </div>
+          <Suspense fallback={<div>Loading Maintenance...</div>}>
+            <AssetMaintenance account={account} isConnected={isConnected}/>
+          </Suspense>
         );
+      default:
+        return <div>Select an option from the sidebar.</div>;
     }
   };
 
@@ -60,7 +73,15 @@ const App = () => {
       ) : (
         <div className="App-main">
           <div className="Sidebar">
-            {options.map(option => (
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </div>
+            {filteredOptions.map(option => (
               <button key={option.key} onClick={() => handleTabClick(option.key)}>
                 {option.label}
               </button>
