@@ -1,13 +1,39 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
 .UserRoles {
   margin: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50; /* Dark blue-grey text color */
 }
 
-.UserRoles button {
-  padding: 10px 20px;
-  font-size: 16px;
+.UserRoles h1 {
+  font-size: 2rem;
+  color: #34495e; /* Slightly lighter blue-grey */
+  margin-bottom: 20px;
 }
 
 .UserRoles p {
-  font-size: 18px;
-  color: #ffcc00;
+  font-size: 1.2rem;
+  color: #7f8c8d; /* Light grey text */
+  margin-bottom: 15px;
+}
+
+.UserRoles button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #1abc9c; /* Teal background */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.UserRoles button:hover {
+  background-color: #16a085; /* Darker teal on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

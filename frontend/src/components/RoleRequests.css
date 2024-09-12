@@ -1,22 +1,50 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
 .RoleRequests {
-    width: 60%;
-    margin: 0 auto;
-  }
-  
-  .requests-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  
-  .request-item {
-    flex: 1 1 45%;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-  }
-  
+  width: 60%;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50; /* Dark blue-grey text color */
+}
+
+.RoleRequests h2 {
+  font-size: 2rem;
+  color: #34495e; /* Slightly lighter blue-grey */
+  margin-bottom: 20px;
+}
+
+.status-message {
+  font-size: 1.2rem;
+  color: #e74c3c; /* Red for error messages */
+  margin-bottom: 15px;
+}
+
+.no-requests {
+  font-size: 1.2rem;
+  color: #7f8c8d; /* Light grey text */
+  margin-bottom: 15px;
+}
+
+.requests-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.request-item {
+  flex: 1 1 45%;
+  background-color: #ecf0f1; /* Light grey background */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px; /* More rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly larger shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  margin-bottom: 20px; /* Increased margin for better spacing */
+}
+
+.request-item:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
