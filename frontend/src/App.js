@@ -11,14 +11,9 @@ const App = () => {
   const [account, setAccount] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [activeTab, setActiveTab] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value.toLowerCase());
   };
 
   const options = [
@@ -26,10 +21,6 @@ const App = () => {
     { label: 'Admin Role Management', key: 'AdminRoleManagement' },
     { label: 'Asset Management', key: 'AssetManagement' }
   ];
-
-  const filteredOptions = options.filter(option =>
-    option.label.toLowerCase().includes(searchQuery)
-  );
 
   const renderContent = () => {
     switch (activeTab) {
@@ -52,7 +43,11 @@ const App = () => {
           </Suspense>
         );
       default:
-        return <div>Select an option from the sidebar.</div>;
+        return (
+          <div className="default-message">
+            <span>Select an option from the sidebar.</span>
+          </div>
+        );
     }
   };
 
@@ -65,15 +60,7 @@ const App = () => {
       ) : (
         <div className="App-main">
           <div className="Sidebar">
-            <div className="search-container">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-            {filteredOptions.map(option => (
+            {options.map(option => (
               <button key={option.key} onClick={() => handleTabClick(option.key)}>
                 {option.label}
               </button>
