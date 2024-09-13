@@ -22,7 +22,7 @@ contract AssetWorkorder {
 
     mapping(uint256 => WorkOrder[]) private workOrders;
 
-    event WorkOrderCreated(uint256 indexed tokenId, string details);
+    event WorkOrderCreated(uint256 indexed tokenId, uint256 index, string details);
     event WorkOrderUpdated(uint256 indexed tokenId, uint256 index, string newDetails, bool isCompleted);
 
     constructor(address _userRoles, address _asset) {
@@ -42,7 +42,7 @@ contract AssetWorkorder {
 
     function createWorkOrder(uint256 tokenId, string memory details) public onlyMaintenanceDepartment assetExists(tokenId) {
         workOrders[tokenId].push(WorkOrder(details, true, false));
-        emit WorkOrderCreated(tokenId, details);
+        emit WorkOrderCreated(tokenId, workOrders[tokenId].length-1, details);
     }
 
     function updateWorkOrder(uint256 tokenId, uint256 index, string memory newDetails, bool isCompleted) public onlyMaintenanceDepartment assetExists(tokenId) {
