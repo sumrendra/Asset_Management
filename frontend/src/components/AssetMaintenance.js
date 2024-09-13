@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { checkUserRoles } from '../utils/checkUserRole';
 import { ethers } from 'ethers';
+import './WorkorderComponent.css';
 import { createWorkOrder, updateWorkOrder, getWorkOrders } from '../utils/workorderUtils';
 
 const WorkorderComponent = ({ account, provider, isConnected }) => {
