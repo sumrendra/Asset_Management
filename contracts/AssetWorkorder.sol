@@ -10,9 +10,10 @@ interface IAsset {
     function ownerOf(uint256 tokenId) external view returns (address);
 }
 
-contract AssetWorkorder{
+contract AssetWorkorder {
     IUserRoles public userRoles;
     IAsset public asset;
+
     struct WorkOrder {
         string details;
         bool isCreated;

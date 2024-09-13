@@ -7,16 +7,20 @@ contract AssetOwnership is Ownable {
     mapping(uint256 => address) private currentOwner;
     mapping(uint256 => address) private pendingOwner;
 
-    event AssetOwnershipTransferred(uint256 indexed tokenId, address indexed oldOwner, address indexed newOwner);
+    event OwnerInitialized(uint256 indexed tokenId, address owner);
+    event OwnershipTransferInitiated(uint256 indexed tokenId, address newOwner);
+    event OwnershipTransferred(uint256 indexed tokenId, address oldOwner, address newOwner);
 
     function initializeOwner(uint256 tokenId, address owner) public onlyOwner {
         require(currentOwner[tokenId] == address(0), "Owner already initialized");
         currentOwner[tokenId] = owner;
+        emit OwnerInitialized(tokenId, owner);
     }
 
     function initiateTransfer(uint256 tokenId, address newOwner) public {
         require(tx.origin == currentOwner[tokenId], "Only current owner can initiate transfer");
         pendingOwner[tokenId] = newOwner;
+        emit OwnershipTransferInitiated(tokenId, newOwner);
     }
 
     function approveTransfer(uint256 tokenId) public {
@@ -24,14 +28,10 @@ contract AssetOwnership is Ownable {
         address oldOwner = currentOwner[tokenId];
         currentOwner[tokenId] = pendingOwner[tokenId];
         pendingOwner[tokenId] = address(0);
-        emit AssetOwnershipTransferred(tokenId, oldOwner, currentOwner[tokenId]);
-    }
-    
-    function getCurrentOwner(uint256 tokenId) public view returns (address) {
-        return currentOwner[tokenId];
+        emit OwnershipTransferred(tokenId, oldOwner, currentOwner[tokenId]);
     }
 
-    function getPendingOwner(uint256 tokenId) public view returns (address) {
-        return pendingOwner[tokenId];
+    function getCurrentOwner(uint256 tokenId) public view returns (address) {
+        return currentOwner[tokenId];
     }
 }
