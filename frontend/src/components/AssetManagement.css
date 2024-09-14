@@ -59,3 +59,21 @@
   background-color: #16a085; /* Darker teal on hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.AssetManagement ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.AssetManagement li {
+  background-color: #ecf0f1; /* Light grey background for list items */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px; /* Match the border radius */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.AssetManagement .error-message {
+  color: #e74c3c; /* Red color for errors */
+  margin-top: 20px;
+}
