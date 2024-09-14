@@ -1,0 +1,86 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/* Common Styles */
+.AuditorComponent {
+  margin: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50;
+}
+
+.AuditorComponent h1 {
+  font-size: 2rem;
+  color: #34495e; 
+  margin-bottom: 20px;
+}
+
+.AuditorComponent h2 {
+  font-size: 2rem;
+  color: #34495e; 
+  margin-bottom: 20px;
+}
+
+.AuditorComponent h3 {
+  font-size: 2rem;
+  color: #34495e; 
+  margin-bottom: 20px;
+}
+
+.AuditorComponent p {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-bottom: 15px;
+}
+
+.AuditorComponent input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.AuditorComponent input:focus {
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+.AuditorComponent button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #1abc9c; /* Teal background */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.AuditorComponent button:hover {
+  background-color: #16a085; /* Darker teal on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.AuditorComponent ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.AuditorComponent li {
+  background-color: #ecf0f1; /* Light grey background for list items */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px; /* Match the border radius */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.AuditorComponent .error-message {
+  color: #e74c3c; /* Red color for errors */
+  margin-top: 20px;
+}
