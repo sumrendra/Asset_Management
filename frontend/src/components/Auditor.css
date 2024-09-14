@@ -1,0 +1,66 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+.AuditorComponent {
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.AuditorComponent h2 {
+  color: #2c3e50;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.AuditorComponent input[type="text"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.AuditorComponent input[type="text"]:focus {
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+.AuditorComponent button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.AuditorComponent button:hover {
+  background-color: #16a085;
+}
+
+.AuditorComponent ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.AuditorComponent li {
+  background-color: #ecf0f1;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.AuditorComponent .error-message {
+  color: #e74c3c;
+  margin-top: 20px;
+}

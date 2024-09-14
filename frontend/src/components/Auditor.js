@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Auditor.css';
 
 const backendAddress = axios.create({
-    baseURL: "http://127.0.0.1:5000"
-  });
+  baseURL: "http://127.0.0.1:5005"
+});
 
 // AssetRegistered Component
 const AssetRegistered = () => {
@@ -14,7 +15,7 @@ const AssetRegistered = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/registered', { query: { tokenId, owner } });
+      const response = await backendAddress.get('/assets/registered', { params: { tokenId, owner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -23,7 +24,7 @@ const AssetRegistered = () => {
   };
 
   return (
-    <div>
+    <div className="AuditorComponent">
       <h2>Assets Registered</h2>
       <input
         type="text"
@@ -38,7 +39,7 @@ const AssetRegistered = () => {
         onChange={(e) => setOwner(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Asset Registered</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
@@ -60,7 +61,7 @@ const OwnershipTransfersInitiated = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/initiated-ownership-transfers', { query: { tokenId, owner, newOwner } });
+      const response = await backendAddress.get('/assets/initiated-ownership-transfers', { params: { tokenId, owner, newOwner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -69,7 +70,7 @@ const OwnershipTransfersInitiated = () => {
   };
 
   return (
-    <div>
+    <div className="AuditorComponent">
       <h2>Ownership Transfers Initiated</h2>
       <input
         type="text"
@@ -90,7 +91,7 @@ const OwnershipTransfersInitiated = () => {
         onChange={(e) => setNewOwner(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Ownership Transfers Initiated</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
@@ -111,7 +112,7 @@ const OwnershipTransfersAccepted = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/accepted-ownership-transfers', { query: { tokenId, newOwner } });
+      const response = await backendAddress.get('/assets/accepted-ownership-transfers', { params: { tokenId, newOwner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -120,7 +121,7 @@ const OwnershipTransfersAccepted = () => {
   };
 
   return (
-    <div>
+    <div className="AuditorComponent">
       <h2>Ownership Transfers Accepted</h2>
       <input
         type="text"
@@ -135,7 +136,7 @@ const OwnershipTransfersAccepted = () => {
         onChange={(e) => setNewOwner(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Ownership Transfers Accepted</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
@@ -166,7 +167,7 @@ const PastChangedTransferCondition = () => {
   };
 
   return (
-    <div>
+    <div className="AuditorComponent">
       <h2>Past Changed Transfer Condition</h2>
       <input
         type="text"
@@ -187,7 +188,7 @@ const PastChangedTransferCondition = () => {
         onChange={(e) => setCondition(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Past Changed Transfer Condition</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
@@ -216,7 +217,7 @@ const WorkOrdersCreated = () => {
   };
 
   return (
-    <div>
+    <div className="AuditorComponent">
       <h2>Work Orders Created</h2>
       <input
         type="text"
@@ -225,7 +226,7 @@ const WorkOrdersCreated = () => {
         onChange={(e) => setTokenId(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Work Orders Created</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
@@ -254,7 +255,7 @@ const WorkOrdersUpdated = () => {
   };
 
   return (
-    <div>
+    <div className="AuditorComponent">
       <h2>Work Orders Updated</h2>
       <input
         type="text"
@@ -263,7 +264,7 @@ const WorkOrdersUpdated = () => {
         onChange={(e) => setTokenId(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Work Orders Updated</button>
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
