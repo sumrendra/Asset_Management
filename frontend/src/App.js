@@ -7,6 +7,8 @@ const UserRoles = lazy(() => import('./components/UserRoles'));
 const AdminRoleManagement = lazy(() => import('./components/AdminRoleManagement'));
 const AssetManagement = lazy(() => import('./components/AssetManagement'));
 const AssetMaintenance = lazy(() => import('./components/AssetMaintenance'));
+const Auditor = lazy(() => import('./components/Auditor'));
+
 
 const App = () => {
   const [account, setAccount] = useState('');
@@ -27,6 +29,7 @@ const App = () => {
     { label: 'Admin Role Management', key: 'AdminRoleManagement' },
     { label: 'Purchase Department', key: 'PurchaseDepartment' },
     { label: 'Maintenance Department', key: 'MaintenanceDepartment' },
+    { label: 'Auditor', key: 'Auditor' }
   ];
 
   const filteredOptions = options.filter(option =>
@@ -57,6 +60,12 @@ const App = () => {
         return (
           <Suspense fallback={<div>Loading Maintenance...</div>}>
             <AssetMaintenance account={account} isConnected={isConnected}/>
+          </Suspense>
+        );
+      case 'Auditor':
+          return (
+          <Suspense fallback={<div>Loading Maintenance...</div>}>
+            <Auditor account={account} isConnected={isConnected}/>
           </Suspense>
         );
       default:
