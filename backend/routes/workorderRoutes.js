@@ -3,7 +3,7 @@ const { getCreatedWorkOrders, getUpdatedWorkOrders } = require('../controllers/w
 const router = express.Router();
 
 router.get('/created', getCreatedWorkOrders);
-router.get('/updated', getCreatedWorkOrders);
+router.get('/updated', getUpdatedWorkOrders);
 
 
 module.exports = router;
