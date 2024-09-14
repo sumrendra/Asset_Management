@@ -1,7 +1,9 @@
 const express = require('express');
-const { getCreatedWorkOrders } = require('../controllers/workorderController');
+const { getCreatedWorkOrders, getUpdatedWorkOrders } = require('../controllers/workorderController');
 const router = express.Router();
 
 router.get('/created', getCreatedWorkOrders);
+router.get('/updated', getCreatedWorkOrders);
+
 
 module.exports = router;
