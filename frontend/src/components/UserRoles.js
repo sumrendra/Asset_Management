@@ -18,7 +18,7 @@ const UserRoles = ({ account, isConnected }) => {
   const requestRole = async (roleString) => {
     if (window.ethereum && isConnected) {
       try {
-        const response = await axios.post('http://localhost:5000/request-role', {
+        const response = await axios.post('http://localhost:5000/role-requests', {
           account: account,
           role: roleString
         });
