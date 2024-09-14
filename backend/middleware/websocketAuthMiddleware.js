@@ -1,32 +1,27 @@
-const { ethers } = require('ethers');
-const UserRolesArtifact = require('../../frontend/src/contracts/UserRoles.json');
-const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545'); // Verify this URL
-const contractAddress = require('../../frontend/src/contracts/contract-address.json');
-const contractABI = UserRolesArtifact.abi;
-const userRolesContract = new ethers.Contract(contractAddress.UserRoles, contractABI, provider);
+const RoleModel = require('../models/RoleModel');
+const url = require('url');
 
-async function verifyClient(info, callback) {
-  try {
-    // Extract account address from query parameters
-    const account = new URLSearchParams(info.req.url.split('?')[1]).get('account');
-    
-    if (!account) {
-      callback(false, 400, 'Unauthorized: No account provided');
-      return;
-    }
+// Middleware to verify WebSocket client
+const verifyClient = (info, done) => {
+  const query = url.parse(info.req.url, true).query;
+  const { account } = query;
 
-    // Check if account is admin
-    const isAdmin = await userRolesContract.hasRole(ethers.constants.HashZero, account);
-
-    if (isAdmin) {
-      callback(true); // Allow WebSocket connection
-    } else {
-      callback(false, 403, 'Forbidden: Not an admin');
-    }
-  } catch (error) {
-    console.error('Error in WebSocket auth middleware:', error);
-    callback(false, 500, 'Internal server error');
+  if (!account) {
+    return done(false, 401, 'Account address is required');
   }
-}
+
+  RoleModel.hasAdminRole(account)
+    .then(isAdmin => {
+      if (isAdmin) {
+        return done(true); // Allow connection
+      } else {
+        return done(false, 403, 'Access denied. Admins only.');
+      }
+    })
+    .catch(error => {
+      console.error('Error in WebSocket authentication middleware:', error);
+      return done(false, 500, 'Internal server error');
+    });
+};
 
 module.exports = verifyClient;
