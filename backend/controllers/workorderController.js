@@ -32,7 +32,7 @@ async function getUpdatedWorkOrders(req, res) {
     const formattedEvents = events.map(event => ({
       tokenId: event.returnValues.tokenId.toString(),
       index: event.returnValues.index.toString(),
-      details: event.returnValues.details,
+      newDetails: event.returnValues.newDetails,
       isCompleted: event.returnValues.isCompleted
     }));
 
