@@ -3,21 +3,15 @@ import { checkUserRoles } from '../utils/checkUserRole';
 import { ethers } from 'ethers';
 import './WorkorderComponent.css';
 import { createWorkOrder, updateWorkOrder, getWorkOrders } from '../utils/workorderUtils';
-
-const WorkorderComponent = ({ account, provider, isConnected }) => {
-  const [roleStatus, setRoleStatus] = useState([]);
-  const [workOrderDetails, setWorkOrderDetails] = useState('');
-  const [workOrderIndex, setWorkOrderIndex] = useState('');
-  const [workOrderStatus, setWorkOrderStatus] = useState(false);
+import {
+  WorkOrdersCreated,
+  WorkOrdersUpdated
+  } from './Auditor';
+// Component to create a work order
+const CreateWorkOrder = ({ isConnected, account }) => {
   const [assetId, setAssetId] = useState('');
+  const [workOrderDetails, setWorkOrderDetails] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
-  const [workOrders, setWorkOrders] = useState([]);
-
-  useEffect(() => {
-    if (isConnected) {
-      checkUserRoles(account, setRoleStatus, isConnected);
-    }
-  }, [isConnected, account]);
 
   const handleCreateWorkOrder = async () => {
     if (window.ethereum && isConnected && assetId && workOrderDetails) {
@@ -34,6 +28,35 @@ const WorkorderComponent = ({ account, provider, isConnected }) => {
     }
   };
 
+  return (
+    <div>
+      <h3>Create Work Order</h3>
+      <input
+        type="number"
+        value={assetId}
+        onChange={(e) => setAssetId(e.target.value)}
+        placeholder="Enter asset ID"
+      />
+      <input
+        type="text"
+        value={workOrderDetails}
+        onChange={(e) => setWorkOrderDetails(e.target.value)}
+        placeholder="Enter work order details"
+      />
+      <button onClick={handleCreateWorkOrder}>Create Work Order</button>
+      <p>{statusMessage}</p>
+    </div>
+  );
+};
+
+// Component to update a work order
+const UpdateWorkOrder = ({ isConnected, account }) => {
+  const [assetId, setAssetId] = useState('');
+  const [workOrderIndex, setWorkOrderIndex] = useState('');
+  const [workOrderDetails, setWorkOrderDetails] = useState('');
+  const [workOrderStatus, setWorkOrderStatus] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+
   const handleUpdateWorkOrder = async () => {
     if (window.ethereum && isConnected && assetId && workOrderIndex !== '' && workOrderDetails) {
       try {
@@ -48,6 +71,45 @@ const WorkorderComponent = ({ account, provider, isConnected }) => {
       setStatusMessage('Please provide all details.');
     }
   };
+
+  return (
+    <div>
+      <h3>Update Work Order</h3>
+      <input
+        type="number"
+        value={assetId}
+        onChange={(e) => setAssetId(e.target.value)}
+        placeholder="Enter asset ID"
+      />
+      <input
+        type="number"
+        value={workOrderIndex}
+        onChange={(e) => setWorkOrderIndex(e.target.value)}
+        placeholder="Enter work order index"
+      />
+      <input
+        type="text"
+        value={workOrderDetails}
+        onChange={(e) => setWorkOrderDetails(e.target.value)}
+        placeholder="Enter new work order details"
+      />
+      <input
+        type="checkbox"
+        checked={workOrderStatus}
+        onChange={(e) => setWorkOrderStatus(e.target.checked)}
+      />
+      <label>Completed</label>
+      <button onClick={handleUpdateWorkOrder}>Update Work Order</button>
+      <p>{statusMessage}</p>
+    </div>
+  );
+};
+
+// Component to get work orders
+const GetWorkOrders = ({ isConnected, account }) => {
+  const [assetId, setAssetId] = useState('');
+  const [workOrders, setWorkOrders] = useState([]);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleGetWorkOrders = async () => {
     if (window.ethereum && isConnected && assetId) {
@@ -65,6 +127,42 @@ const WorkorderComponent = ({ account, provider, isConnected }) => {
   };
 
   return (
+    <div>
+      <h3>Get Work Orders</h3>
+      <input
+        type="number"
+        value={assetId}
+        onChange={(e) => setAssetId(e.target.value)}
+        placeholder="Enter asset ID"
+      />
+      <button onClick={handleGetWorkOrders}>Get Work Orders</button>
+      <div>
+        {workOrders.length > 0 && (
+          <ul>
+            {workOrders.map((order, index) => (
+              <li key={index}>
+                Details: {order.details}, Created: {order.isCreated ? 'Yes' : 'No'}, Completed: {order.isCompleted ? 'Yes' : 'No'}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <p>{statusMessage}</p>
+    </div>
+  );
+};
+
+// Main WorkorderComponent that ties everything together
+const WorkorderComponent = ({ account, provider, isConnected }) => {
+  const [roleStatus, setRoleStatus] = useState([]);
+
+  useEffect(() => {
+    if (isConnected) {
+      checkUserRoles(account, setRoleStatus, isConnected);
+    }
+  }, [isConnected, account]);
+
+  return (
     <div className="WorkorderComponent">
       <h1>Work Order Management</h1>
       {isConnected ? (
@@ -76,69 +174,11 @@ const WorkorderComponent = ({ account, provider, isConnected }) => {
           ))}
           {roleStatus.includes('MAINTENANCE_DEP_ROLE') && (
             <div>
-              <h3>Create Work Order</h3>
-              <input
-                type="number"
-                value={assetId}
-                onChange={(e) => setAssetId(e.target.value)}
-                placeholder="Enter asset ID"
-              />
-              <input
-                type="text"
-                value={workOrderDetails}
-                onChange={(e) => setWorkOrderDetails(e.target.value)}
-                placeholder="Enter work order details"
-              />
-              <button onClick={handleCreateWorkOrder}>Create Work Order</button>
-
-              <h3>Update Work Order</h3>
-              <input
-                type="number"
-                value={assetId}
-                onChange={(e) => setAssetId(e.target.value)}
-                placeholder="Enter asset ID"
-              />
-              <input
-                type="number"
-                value={workOrderIndex}
-                onChange={(e) => setWorkOrderIndex(e.target.value)}
-                placeholder="Enter work order index"
-              />
-              <input
-                type="text"
-                value={workOrderDetails}
-                onChange={(e) => setWorkOrderDetails(e.target.value)}
-                placeholder="Enter new work order details"
-              />
-              <input
-                type="checkbox"
-                checked={workOrderStatus}
-                onChange={(e) => setWorkOrderStatus(e.target.checked)}
-              />
-              <label>Completed</label>
-              <button onClick={handleUpdateWorkOrder}>Update Work Order</button>
-
-              <h3>Get Work Orders</h3>
-              <input
-                type="number"
-                value={assetId}
-                onChange={(e) => setAssetId(e.target.value)}
-                placeholder="Enter asset ID"
-              />
-              <button onClick={handleGetWorkOrders}>Get Work Orders</button>
-              <div>
-                {workOrders.length > 0 && (
-                  <ul>
-                    {workOrders.map((order, index) => (
-                      <li key={index}>
-                        Details: {order.details}, Created: {order.isCreated ? 'Yes' : 'No'}, Completed: {order.isCompleted ? 'Yes' : 'No'}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <p>{statusMessage}</p>
+              <CreateWorkOrder isConnected={isConnected} account={account} />
+              <UpdateWorkOrder isConnected={isConnected} account={account} />
+              <GetWorkOrders isConnected={isConnected} account={account} />
+              <WorkOrdersCreated />
+              <WorkOrdersUpdated />
             </div>
           )}
         </div>

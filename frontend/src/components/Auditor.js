@@ -7,14 +7,14 @@ const backendAddress = axios.create({
 
 // AssetRegistered Component
 const AssetRegistered = () => {
-  const [tokenId, setTokenId] = useState('');
+  const [AssetId, setAssetId] = useState('');
   const [owner, setOwner] = useState('');
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/registered', { query: { tokenId, owner } });
+      const response = await backendAddress.get('/assets/registered', { query: { AssetId, owner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -27,9 +27,9 @@ const AssetRegistered = () => {
       <h2>Assets Registered</h2>
       <input
         type="text"
-        placeholder="Token ID"
-        value={tokenId}
-        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="Asset ID"
+        value={AssetId}
+        onChange={(e) => setAssetId(e.target.value)}
       />
       <input
         type="text"
@@ -42,7 +42,7 @@ const AssetRegistered = () => {
       <ul>
         {data.map((item, index) => (
           <li key={index}>
-            Token ID: {item.tokenId}, Owner: {item.owner}, Details: {item.details}, Transfer Condition: {item.transferCondition}
+            Asset ID: {item.AssetId}, Owner: {item.owner}, Details: {item.details}, Transfer Condition: {item.transferCondition}
           </li>
         ))}
       </ul>
@@ -52,7 +52,7 @@ const AssetRegistered = () => {
 
 // OwnershipTransfersInitiated Component
 const OwnershipTransfersInitiated = () => {
-  const [tokenId, setTokenId] = useState('');
+  const [AssetId, setAssetId] = useState('');
   const [owner, setOwner] = useState('');
   const [newOwner, setNewOwner] = useState('');
   const [data, setData] = useState([]);
@@ -60,7 +60,7 @@ const OwnershipTransfersInitiated = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/initiated-ownership-transfers', { query: { tokenId, owner, newOwner } });
+      const response = await backendAddress.get('/assets/initiated-ownership-transfers', { query: { AssetId, owner, newOwner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -73,9 +73,9 @@ const OwnershipTransfersInitiated = () => {
       <h2>Ownership Transfers Initiated</h2>
       <input
         type="text"
-        placeholder="Token ID"
-        value={tokenId}
-        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="Asset ID"
+        value={AssetId}
+        onChange={(e) => setAssetId(e.target.value)}
       />
       <input
         type="text"
@@ -94,7 +94,7 @@ const OwnershipTransfersInitiated = () => {
       <ul>
         {data.map((item, index) => (
           <li key={index}>
-            Token ID: {item.tokenId}, Owner: {item.owner}, New Owner: {item.newOwner}
+            Asset ID: {item.AssetId}, Owner: {item.owner}, New Owner: {item.newOwner}
           </li>
         ))}
       </ul>
@@ -104,14 +104,14 @@ const OwnershipTransfersInitiated = () => {
 
 // OwnershipTransfersAccepted Component
 const OwnershipTransfersAccepted = () => {
-  const [tokenId, setTokenId] = useState('');
+  const [AssetId, setAssetId] = useState('');
   const [newOwner, setNewOwner] = useState('');
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/accepted-ownership-transfers', { query: { tokenId, newOwner } });
+      const response = await backendAddress.get('/assets/accepted-ownership-transfers', { query: { AssetId, newOwner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -124,9 +124,9 @@ const OwnershipTransfersAccepted = () => {
       <h2>Ownership Transfers Accepted</h2>
       <input
         type="text"
-        placeholder="Token ID"
-        value={tokenId}
-        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="Asset ID"
+        value={AssetId}
+        onChange={(e) => setAssetId(e.target.value)}
       />
       <input
         type="text"
@@ -139,7 +139,7 @@ const OwnershipTransfersAccepted = () => {
       <ul>
         {data.map((item, index) => (
           <li key={index}>
-            Token ID: {item.tokenId}, New Owner: {item.newOwner}
+            Asset ID: {item.AssetId}, New Owner: {item.newOwner}
           </li>
         ))}
       </ul>
@@ -149,7 +149,7 @@ const OwnershipTransfersAccepted = () => {
 
 // PastChangedTransferCondition Component
 const PastChangedTransferCondition = () => {
-  const [tokenId, setTokenId] = useState('');
+  const [AssetId, setAssetId] = useState('');
   const [previousCondition, setPreviousCondition] = useState('');
   const [condition, setCondition] = useState('');
   const [data, setData] = useState([]);
@@ -157,7 +157,7 @@ const PastChangedTransferCondition = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/changed-transfer-conditions', { params: { tokenId, previousCondition, condition } });
+      const response = await backendAddress.get('/assets/changed-transfer-conditions', { params: { AssetId, previousCondition, condition } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -170,9 +170,9 @@ const PastChangedTransferCondition = () => {
       <h2>Past Changed Transfer Condition</h2>
       <input
         type="text"
-        placeholder="Token ID"
-        value={tokenId}
-        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="Asset ID"
+        value={AssetId}
+        onChange={(e) => setAssetId(e.target.value)}
       />
       <input
         type="text"
@@ -191,7 +191,7 @@ const PastChangedTransferCondition = () => {
       <ul>
         {data.map((item, index) => (
           <li key={index}>
-            Token ID: {item.tokenId}, Previous Condition: {item.previousCondition}, Condition: {item.condition}
+            Asset ID: {item.AssetId}, Previous Condition: {item.previousCondition}, Condition: {item.condition}
           </li>
         ))}
       </ul>
@@ -201,13 +201,13 @@ const PastChangedTransferCondition = () => {
 
 // WorkOrdersCreated Component
 const WorkOrdersCreated = () => {
-  const [tokenId, setTokenId] = useState('');
+  const [AssetId, setAssetId] = useState('');
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/work-orders/created', { params: { tokenId } });
+      const response = await backendAddress.get('/work-orders/created', { params: { AssetId } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -220,16 +220,16 @@ const WorkOrdersCreated = () => {
       <h2>Work Orders Created</h2>
       <input
         type="text"
-        placeholder="Token ID"
-        value={tokenId}
-        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="Asset ID"
+        value={AssetId}
+        onChange={(e) => setAssetId(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Work Orders Created</button>
       {error && <p>{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
-            Token ID: {item.tokenId}, Index: {item.index}, Details: {item.details}
+            Asset ID: {item.AssetId}, Index: {item.index}, Details: {item.details}
           </li>
         ))}
       </ul>
@@ -239,13 +239,13 @@ const WorkOrdersCreated = () => {
 
 // WorkOrdersUpdated Component
 const WorkOrdersUpdated = () => {
-  const [tokenId, setTokenId] = useState('');
+  const [AssetId, setAssetId] = useState('');
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/work-orders/updated', { params: { tokenId } });
+      const response = await backendAddress.get('/work-orders/updated', { params: { AssetId } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -258,16 +258,16 @@ const WorkOrdersUpdated = () => {
       <h2>Work Orders Updated</h2>
       <input
         type="text"
-        placeholder="Token ID"
-        value={tokenId}
-        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="Asset ID"
+        value={AssetId}
+        onChange={(e) => setAssetId(e.target.value)}
       />
       <button onClick={fetchData}>Fetch Work Orders Updated</button>
       {error && <p>{error}</p>}
       <ul>
         {data.map((item, index) => (
           <li key={index}>
-            Token ID: {item.tokenId}, Index: {item.index}, New Details: {item.newDetails}, Completed: {item.isCompleted.toString()}
+            Asset ID: {item.AssetId}, Index: {item.index}, New Details: {item.newDetails}, Completed: {item.isCompleted.toString()}
           </li>
         ))}
       </ul>
@@ -288,5 +288,14 @@ const AuditorsDashboard = () => {
     </div>
   );
 };
+
+export { 
+    AssetRegistered, 
+    OwnershipTransfersInitiated, 
+    OwnershipTransfersAccepted, 
+    PastChangedTransferCondition, 
+    WorkOrdersCreated, 
+    WorkOrdersUpdated 
+  };
 
 export default AuditorsDashboard;
