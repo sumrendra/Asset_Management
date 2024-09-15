@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import auditorModuleStyle from './Auditor.module.css';
-
+import { backendHttpServer } from '../config';
 const backendAddress = axios.create({
-  baseURL: "http://127.0.0.1:5000"
+  baseURL: backendHttpServer
 });
+
 
 // AssetRegistered Component
 const AssetRegistered = () => {
@@ -15,7 +16,7 @@ const AssetRegistered = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/registered', { query: { tokenId, owner } });
+      const response = await backendAddress.get('/assets/registered', { params: { tokenId, owner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -61,7 +62,7 @@ const OwnershipTransfersInitiated = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/initiated-ownership-transfers', { query: { tokenId, owner, newOwner } });
+      const response = await backendAddress.get('/assets/initiated-ownership-transfers', { params: { tokenId, owner, newOwner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -112,7 +113,7 @@ const OwnershipTransfersAccepted = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/accepted-ownership-transfers', { query: { tokenId, newOwner } });
+      const response = await backendAddress.get('/assets/accepted-ownership-transfers', { params: { tokenId, newOwner } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -158,7 +159,7 @@ const PastChangedTransferCondition = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/assets/changed-transfer-conditions', { query: { tokenId, previousCondition, condition } });
+      const response = await backendAddress.get('/assets/changed-transfer-conditions', { params: { tokenId, previousCondition, condition } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -208,7 +209,7 @@ const WorkOrdersCreated = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/work-orders/created', { query: { tokenId } });
+      const response = await backendAddress.get('/work-orders/created', { params: { tokenId } });
       setData(response.data.events);
       setError('');
     } catch (err) {
@@ -246,7 +247,7 @@ const WorkOrdersUpdated = () => {
 
   const fetchData = async () => {
     try {
-      const response = await backendAddress.get('/work-orders/updated', { query: { tokenId } });
+      const response = await backendAddress.get('/work-orders/updated', { params: { tokenId } });
       setData(response.data.events);
       setError('');
     } catch (err) {

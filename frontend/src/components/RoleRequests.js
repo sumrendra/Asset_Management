@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './RoleRequests.css';
+import { backendHttpServer, backendWsServer } from '../config';
 
 const RoleRequests = ({ isAdmin, account }) => {
   const [requests, setRequests] = useState([]);
@@ -23,7 +24,7 @@ const RoleRequests = ({ isAdmin, account }) => {
 
   const fetchRoleRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/role-requests', {
+      const response = await axios.get(`${backendHttpServer}/role-requests`, {
         headers: {
           'account': account, // Ensure the account address is included in the headers
         },
@@ -36,7 +37,7 @@ const RoleRequests = ({ isAdmin, account }) => {
   };
 
   const setupWebSocket = () => {
-    const websocket = new WebSocket(`ws://localhost:5000/?account=${account}`);
+    const websocket = new WebSocket(`${backendWsServer}/?account=${account}`);
 
     websocket.onopen = () => {
       console.log('Connected to WebSocket server');

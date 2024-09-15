@@ -5,6 +5,7 @@ import axios from 'axios';
 import { roles } from '../utils/roles';
 import { checkUserRoles } from '../utils/checkUserRole';
 import './UserRoles.css';
+import {backendHttpServer} from '../config';
 
 const UserRoles = ({ account, isConnected }) => {
   const [roleStatus, setRoleStatus] = useState([]);
@@ -18,7 +19,7 @@ const UserRoles = ({ account, isConnected }) => {
   const requestRole = async (roleString) => {
     if (window.ethereum && isConnected) {
       try {
-        const response = await axios.post('http://localhost:5000/role-requests', {
+        const response = await axios.post(`${backendHttpServer}/role-requests`, {
           account: account,
           role: roleString
         });
