@@ -69,6 +69,7 @@ cd Asset_Management
 Install Hardhat :
 
 ```bash
+npm install 
 npm install hardhat
 ```
 
@@ -86,11 +87,12 @@ cd ../frontend
 npm install
 ```
 
-### 3. Deploy Smart Contracts
+### 3. Run Hardhat node and Deploy Smart Contracts
 
 Navigate to the root directory and deploy the smart contracts using Hardhat:
 
 ```bash
+npx hardhat node
 npx hardhat run scripts/deploy.js --network localhost
 ```
 
