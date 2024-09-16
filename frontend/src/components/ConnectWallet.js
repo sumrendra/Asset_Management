@@ -1,31 +1,38 @@
-import React from "react";
+import React, { useState } from 'react';
+import { ethers } from 'ethers';
+import './ConnectWallet.css';
 
-import { NetworkErrorMessage } from "./NetworkErrorMessage";
+const ConnectWallet = ({ setAccount, setIsConnected }) => {
+  const [status, setStatus] = useState('');
 
-export function ConnectWallet({ connectWallet, networkError, dismiss }) {
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+        setAccount(address);
+        setIsConnected(true);
+        setStatus('Wallet connected.');
+      } catch (error) {
+        setStatus('Failed to connect wallet. Please try again.');
+        console.error("Error connecting to wallet:", error);
+      }
+    } else {
+      setStatus('MetaMask is not installed. Please install it to use this app.');
+    }
+  };
+
   return (
-    <div className="container">
-      <div className="row justify-content-md-center">
-        <div className="col-12 text-center">
-          {/* Wallet network should be set to Localhost:8545. */}
-          {networkError && (
-            <NetworkErrorMessage 
-              message={networkError} 
-              dismiss={dismiss} 
-            />
-          )}
-        </div>
-        <div className="col-6 p-4 text-center">
-          <p>Please connect to your wallet.</p>
-          <button
-            className="btn btn-warning"
-            type="button"
-            onClick={connectWallet}
-          >
-            Connect Wallet
-          </button>
-        </div>
-      </div>
+    <div className="connect-wallet-container">
+      <h1>Connect Your Wallet</h1>
+      <button onClick={connectWallet}>
+        <span>Connect with MetaMask</span>
+      </button>
+      {status && <p className="status-message">{status}</p>}
     </div>
   );
-}
+};
+
+export default ConnectWallet;

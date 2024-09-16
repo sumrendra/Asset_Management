@@ -1,55 +1,68 @@
-// This is a script for deploying your contracts. You can adapt it to deploy
-// yours, or create new ones.
-
-const path = require("path");
+// scripts/deploy.js
+const fs = require('fs');
+const path = require('path');
 
 async function main() {
-  // This is just a convenience check
-  if (network.name === "hardhat") {
-    console.warn(
-      "You are trying to deploy a contract to the Hardhat Network, which" +
-        "gets automatically created and destroyed every time. Use the Hardhat" +
-        " option '--network localhost'"
-    );
-  }
-
-  // ethers is available in the global scope
   const [deployer] = await ethers.getSigners();
-  console.log(
-    "Deploying the contracts with the account:",
-    await deployer.getAddress()
-  );
+  console.log("Deploying contracts with the account:", deployer.address);
 
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  // Deploy UserRoles contract
+  const UserRoles = await ethers.getContractFactory("UserRoles");
+  const userRoles = await UserRoles.deploy();
+  await userRoles.deployed();
+  console.log("UserRoles contract deployed to:", userRoles.address);
 
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
-  await token.deployed();
+  // Deploy Asset contract, passing the UserRoles address
+  const Asset = await ethers.getContractFactory("Asset");
+  const asset = await Asset.deploy(userRoles.address);
+  await asset.deployed();
+  console.log("Asset contract deployed to:", asset.address);
 
-  console.log("Token address:", token.address);
+   // Deploy AssetWorkorder contract, passing the UserRoles address
+   const AssetWorkorder = await ethers.getContractFactory("AssetWorkorder");
+   const assetWorkorder = await AssetWorkorder.deploy(userRoles.address,asset.address);
+   await assetWorkorder.deployed();
+   console.log("AssetWorkorder contract deployed to:", assetWorkorder.address);
 
-  // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(token);
+  // Save the contract addresses and ABIs to the frontend
+  saveFrontendFiles(userRoles, asset, assetWorkorder);
 }
 
-function saveFrontendFiles(token) {
-  const fs = require("fs");
-  const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
+function saveFrontendFiles(userRoles, asset, assetWorkorder) {
+  const contractsDir = path.join(__dirname, '..', 'frontend', 'src', 'contracts');
 
+  // Create the directory if it doesn't exist
   if (!fs.existsSync(contractsDir)) {
-    fs.mkdirSync(contractsDir);
+    fs.mkdirSync(contractsDir, { recursive: true });
   }
 
+  // Save the contract addresses
   fs.writeFileSync(
-    path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ Token: token.address }, undefined, 2)
+    path.join(contractsDir, 'contract-address.json'),
+    JSON.stringify({ 
+      UserRoles: userRoles.address, 
+      Asset: asset.address,
+      AssetWorkorder: assetWorkorder.address
+    }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
+  // Save the ABIs
+  const UserRolesArtifact = artifacts.readArtifactSync("UserRoles");
+  const AssetArtifact = artifacts.readArtifactSync("Asset");
+  const AssetWorkorderArtifact = artifacts.readArtifactSync("AssetWorkorder");
 
   fs.writeFileSync(
-    path.join(contractsDir, "Token.json"),
-    JSON.stringify(TokenArtifact, null, 2)
+    path.join(contractsDir, 'UserRoles.json'),
+    JSON.stringify(UserRolesArtifact, null, 2)
+  );
+
+  fs.writeFileSync(
+    path.join(contractsDir, 'Asset.json'),
+    JSON.stringify(AssetArtifact, null, 2)
+  );
+  fs.writeFileSync(
+    path.join(contractsDir, 'AssetWorkorder.json'),
+    JSON.stringify(AssetWorkorderArtifact, null, 2)
   );
 }
 
