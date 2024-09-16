@@ -55,3 +55,71 @@ To build our decentralized asset management system, we are using the following t
 
 ## Getting Started
 
+Follow these steps to set up and run the Decentralized Asset Management System:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/sumrendra/Asset_Management.git
+cd Asset_Management
+```
+
+### 2. Install Dependencies
+
+Install Hardhat :
+
+```bash
+npm install hardhat
+```
+
+#### Backend
+
+```bash
+cd backend
+npm install
+```
+
+#### Frontend
+
+```bash
+cd ../frontend
+npm install
+```
+
+### 3. Deploy Smart Contracts
+
+Navigate to the root directory and deploy the smart contracts using Hardhat:
+
+```bash
+npx hardhat run scripts/deploy.js --network localhost
+```
+
+### 5. Run the Backend Server
+
+Start the backend (Express.js) server:
+
+```bash
+cd backend
+node server.js
+```
+
+### 6. Run the Frontend App
+
+Start the frontend (React) app:
+
+```bash
+cd ../frontend
+npm start
+```
+
+### 7. Access the App
+
+Once both the backend and frontend are running, open your browser and navigate to:
+
+```
+http://localhost:3000
+```
+
+This will load the Decentralized Asset Management System's frontend, where you can interact with the system.
+
+
